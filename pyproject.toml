@@ -54,6 +54,7 @@ exclude = ["tests/"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["."]
 markers = ["slow: long-running Monte Carlo tests", "network: requires internet access"]
 addopts = "-m 'not network'"
 filterwarnings = ["ignore::DeprecationWarning", "ignore::FutureWarning"]
