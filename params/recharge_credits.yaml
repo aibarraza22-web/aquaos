@@ -1,0 +1,13 @@
+long_term_storage_credit_fraction:
+  value: 0.95
+  provenance:
+    title: "A.R.S. 45-852.01(C): long-term storage credit for stored water"
+    kind: primary
+    source_url: "https://www.azleg.gov/ars/45/00852-01.htm"
+    retrieved: 2026-09-22
+    license: "Arizona Revised Statutes (public law)"
+    units: {value: "fraction of recoverable stored amount credited"}
+    notes: >-
+      "The director shall credit ninety-five percent of the recoverable amount of stored water that meets the
+      requirements of subsection B". Exceptions exist (e.g. 50% for some effluent storage; 100% in listed cases).
+      Scenarios storing effluent must override this value.

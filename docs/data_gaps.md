@@ -3,25 +3,33 @@
 Every dataset or parameter that AquaOS cannot yet source from a verified primary document is listed here.
 Code and YAML that use a stand-in label it `SYNTHETIC`.
 
-## Environment finding (2026-09-22)
+## Source status (updated 2026-09-22)
 
-The cloud development environment's egress policy returns HTTP 403 for all candidate source hosts.
-WebFetch is blocked as well. None of the values below could be verified against a primary source, so none has been
-entered from memory. Each source must be fetched once from an environment that allows these hosts. After that, the
-offline cache serves them.
+The session's network policy was widened on 2026-09-22. Status per source:
 
 | Source | Host(s) | Needed for | Status |
 |---|---|---|---|
-| Reclamation 24-Month Study | www.usbr.gov | Lake Mead projections, shortage tier scenarios | UNVERIFIED (blocked) |
-| USGS Water Data APIs | api.waterdata.usgs.gov, waterservices.usgs.gov | streamflow, groundwater levels | UNVERIFIED (blocked) |
-| ADWR well / groundwater data | new.azwater.gov | AMA budgets, well levels | UNVERIFIED (blocked) |
-| CAP delivery and energy | www.cap-az.com | CAP allocation by tier, pumping energy | UNVERIFIED (blocked) |
-| EIA API | api.eia.gov | AZ electricity price, generation mix, carbon intensity | UNVERIFIED (blocked) |
-| SRP / APS tariff sheets | www.srpnet.com, www.aps.com | TOU windows, energy and demand charges | UNVERIFIED (blocked) |
-| NOAA / PRISM climate | www.ncei.noaa.gov, prism.oregonstate.edu | temperature for demand models, heat-wave statistics | UNVERIFIED (blocked) |
-| EPA SDWIS / ECHO | echo.epa.gov | system characteristics, compliance context | UNVERIFIED (blocked) |
+| Reclamation 24-Month Study | www.usbr.gov | Lake Mead projections | **Fetched.** Latest published is the July 2026 Most Probable (the August/September 2026 PDFs return 404 as of 2026-09-22). Connector: `aquaos.data.connectors.usbr` |
+| Reclamation 2027-2028 Operating Guidelines + ROD (2026-08-21) | www.usbr.gov | Shortage condition for 2027-2028 | **Fetched and used** in `params/colorado_river_shortage.yaml` |
+| CAP Colorado River operations page | www.cap-az.com | CY2026 Tier 1 reduction | **Fetched and used** in `params/colorado_river_shortage.yaml` |
+| A.R.S. 45-852.01 | www.azleg.gov | Long-term storage credit fraction | **Fetched and used** in `params/recharge_credits.yaml` |
+| NOAA NCEI (GHCN-Daily, Global Hourly) | www.ncei.noaa.gov | Temperature | **Fetched and used** in `params/phoenix_climate.yaml`. Connector: `aquaos.data.connectors.noaa` |
+| USGS Water Data APIs | waterservices.usgs.gov | Streamflow, groundwater levels | Reachable, not used yet (aquifer parameters are synthetic) |
+| ADWR well / groundwater data | azwater.gov | AMA data, well levels | **Blocked by the site** (Cloudflare challenge, HTTP 403). Needs a manual download or an ADWR data-service endpoint |
+| EIA API | api.eia.gov | AZ electricity price, carbon intensity (Phase 2) | Reachable. **Requires a free API key** (HTTP 403 without one) |
+| SRP tariff sheets | www.srpnet.com | TOU tariffs (Phase 2) | **Blocked by the site** (HTTP 403 to automated clients). Needs a manual download |
+| APS tariff sheets | www.aps.com | TOU tariffs (Phase 2) | Reachable, not fetched yet |
+| PRISM | prism.oregonstate.edu | Gridded climate | Reachable, not used yet |
+| EPA ECHO / SDWIS | echo.epa.gov | System context | Reachable, not used yet |
 
 ## Synthetic stand-ins in use
 
-_None yet. Phase 1 adds entries here: Valley City network, demand coefficients, synthetic temperature series,
-CAP tier reduction table, groundwater budget, pump curves._
+| Stand-in | Replaces | Label |
+|---|---|---|
+| Valley City network | A real utility `.inp` | SYNTHETIC |
+| Demand coefficients (per-capita use, diurnal patterns, temperature response) | Utility billing/AMI and SCADA data | SYNTHETIC |
+| City CAP subcontract and M&I share of shortage | CAP subcontract schedules and CAP shortage-sharing by priority pool | SYNTHETIC / ASSUMPTION |
+| Groundwater allowance and aquifer parameters | ADWR AWS determination, ADWR/USGS well data, Phoenix AMA groundwater model | SYNTHETIC |
+| Recharge credit balance | ADWR long-term storage account data | SYNTHETIC |
+| Pump efficiencies and curves | Pump test data | SYNTHETIC |
+| Hypothetical 1.0 maf Arizona reduction | No source; stress test beyond the 2027-2028 guidelines | ASSUMPTION |

@@ -1,0 +1,13 @@
+# July 2027 under the 2027-2028 Operating Guidelines shortage condition, combined with the heat wave.
+extends: valley_city_heatwave_7d.yaml
+name: valley_city_2027_shortage_heatwave_7d
+description: "Heat-wave week in July 2027 under the 2027-2028 Operating Guidelines (AZ -760 kaf); ASSUMED 25% M&I cut."
+seed: 20270712
+time:
+  start: 2027-07-12T00:00:00
+supply:
+  cap:
+    shortage_condition: cy2027_2028_operating_guidelines   # primary source: Operating Guidelines Sec. 5.3.A
+    mi_reduction_fraction: 0.25                            # ASSUMPTION for sensitivity analysis
+  groundwater:
+    pumped_to_date_af: 1600                                # SYNTHETIC: more pumping earlier in a shortage year

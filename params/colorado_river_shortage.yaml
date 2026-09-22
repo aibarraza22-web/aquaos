@@ -1,0 +1,55 @@
+# Colorado River shortage conditions affecting Arizona.
+# Only values quoted from primary sources are marked kind: primary. Scenarios pick a condition by key;
+# no shortage level is hardcoded anywhere in Python.
+conditions:
+  cy2026_tier1:
+    label: "CY2026 Tier 1 shortage (2007 Interim Guidelines + DCP)"
+    az_reduction_af: 512000
+    provenance:
+      title: "CAP: Arizona is taking Tier 1 reductions for 2026"
+      kind: primary
+      source_url: "https://www.cap-az.com/water/water-supply/colorado-river-operations-2/"
+      retrieved: 2026-09-22
+      license: "Copyright CAWCD; factual figure cited"
+      units: {az_reduction_af: "acre-feet per calendar year"}
+      notes: >-
+        Page text: "This represents a 512,000 acre-foot reduction to Arizona's Colorado River water supply,
+        constituting 30% of CAP's normal supply ... Nearly all the reductions within Arizona have been taken by
+        Central Arizona Project (CAP) water users."
+
+  cy2027_2028_operating_guidelines:
+    label: "CY2027-2028 Shortage Condition (2027-2028 Operating Guidelines, ROD of 2026-08-21)"
+    az_reduction_af: 760000
+    az_apportionment_af: 2040000
+    provenance:
+      title: "Colorado River Guidelines for Coordinated Operations of Lake Powell and Lake Mead, Operating Years 2027 and 2028, Section 5.3.A"
+      kind: primary
+      source_url: "https://www.usbr.gov/ColoradoRiverBasin/post2026/decision-doc/2027-2028OperatingGuidelines_Final.pdf"
+      source_document: "2027-2028 Operating Guidelines (August 2026), Section 5.3.A.1-2"
+      retrieved: 2026-09-22
+      license: "U.S. Government work; public domain in the U.S."
+      units: {az_reduction_af: "acre-feet per calendar year", az_apportionment_af: "acre-feet per calendar year"}
+      notes: >-
+        "Of the 6.25 maf ... 2.04 maf shall be apportioned for use in Arizona ... reflecting reductions of 760,000 af
+        in Arizona". Consultation is triggered if the Most Probable 24-Month Study shows Lake Mead below 1,010 ft
+        within 12 months (Section 5.3.A.4), so deeper actions are possible and should be explored as scenarios.
+
+  hypothetical_1maf_az_reduction:
+    label: "HYPOTHETICAL: 1.0 maf Arizona reduction (stress test beyond the 2027-2028 guidelines)"
+    az_reduction_af: 1000000
+    provenance:
+      title: "Hypothetical deeper shortage for stress testing"
+      kind: assumption
+      notes: >-
+        Not a published operating condition. Explores the consultation case in Operating Guidelines Section 5.3.A.4
+        (Lake Mead projected below 1,010 ft). Value chosen by AquaOS for sensitivity analysis only.
+
+derived:
+  cap_normal_supply_af:
+    value: 1706667
+    provenance:
+      title: "CAP normal supply implied by the CY2026 Tier 1 statement"
+      kind: derived
+      source_url: "https://www.cap-az.com/water/water-supply/colorado-river-operations-2/"
+      derivation: "512,000 af / 0.30 (CAP states the Tier 1 cut is 30% of CAP's normal supply; 30% is rounded, so this is approximate)"
+      units: {value: "acre-feet per year"}

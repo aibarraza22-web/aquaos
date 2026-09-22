@@ -1,0 +1,63 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aquaos"
+version = "0.1.0"
+description = "AquaOS Arizona: an open water-infrastructure operating system for the desert Southwest"
+readme = "CLAUDE.md"
+requires-python = ">=3.11"
+dependencies = [
+  "wntr>=1.5,<2",
+  "pyomo>=6.10",
+  "highspy>=1.7",
+  "numpy>=1.26",
+  "pandas>=2.2",
+  "xarray>=2024.1",
+  "duckdb>=1.0",
+  "pyarrow>=15",
+  "pydantic>=2.6",
+  "pyyaml>=6",
+  "pypdf>=4",
+  "beautifulsoup4>=4.12",
+  "lxml>=5",
+  "fastapi>=0.110",
+  "uvicorn>=0.29",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "pytest-cov>=5", "ruff>=0.5", "mypy>=1.10", "types-PyYAML", "pandas-stubs", "httpx>=0.27"]
+
+[project.scripts]
+aquaos = "aquaos.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["aquaos*"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "NPY"]
+
+[tool.mypy]
+python_version = "3.11"
+plugins = ["pydantic.mypy"]
+strict_optional = true
+warn_unused_ignores = true
+disallow_untyped_defs = true
+check_untyped_defs = true
+ignore_missing_imports = true
+exclude = ["tests/"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["slow: long-running Monte Carlo tests", "network: requires internet access"]
+addopts = "-m 'not network'"
+filterwarnings = ["ignore::DeprecationWarning", "ignore::FutureWarning"]
+
+[tool.coverage.run]
+source = ["aquaos"]
+omit = ["aquaos/api/*", "aquaos/cli.py"]

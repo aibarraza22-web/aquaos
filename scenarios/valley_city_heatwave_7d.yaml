@@ -1,0 +1,11 @@
+# Same week as the baseline, with a synthetic 4-day heat wave: +4 degC afternoon peaks and +5 degC nights.
+extends: valley_city_baseline_7d.yaml
+name: valley_city_heatwave_7d
+description: "Baseline week plus a SYNTHETIC 4-day heat wave (+4 degC peak, +5 degC overnight), CY2026 Tier 1."
+demand:
+  heat_wave:
+    start_day: 1.5
+    duration_days: 4
+    tmax_delta_c: 4.0
+    tmin_delta_c: 5.0
+    ramp_days: 1.0

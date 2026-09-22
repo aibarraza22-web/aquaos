@@ -1,0 +1,31 @@
+# Valley City: a typical mid-July week under the CY2026 Tier 1 shortage.
+# Everything about Valley City itself is SYNTHETIC. The shortage condition and the recharge credit rule come from
+# primary sources (see params/). Values marked ASSUMPTION are scenario choices meant for sensitivity analysis.
+name: valley_city_baseline_7d
+description: "Synthetic Valley City, 7 days from 2026-07-13, synthetic July weather fitted to Phoenix NOAA data, CY2026 Tier 1."
+seed: 20260713
+time:
+  start: 2026-07-13T00:00:00
+  duration_days: 7
+  hydraulic_step_s: 900
+  report_step_s: 900
+network:
+  source: valley_city
+demand:
+  population: 40000            # SYNTHETIC
+  temperature:
+    source: synthetic
+    climate_params: phoenix_climate.yaml
+supply:
+  cap:
+    contract_af_per_year: 6000         # SYNTHETIC city M&I subcontract
+    shortage_condition: cy2026_tier1   # params/colorado_river_shortage.yaml (primary source)
+    mi_reduction_fraction: 0.0         # ASSUMPTION: city's M&I subcontract not cut under this condition
+    wtp_capacity_m3s: 0.30
+  groundwater:
+    ama: phoenix
+    annual_allowance_af: 2500          # SYNTHETIC AMA-style budget, not an ADWR determination
+    pumped_to_date_af: 1300            # SYNTHETIC
+  recharge:
+    credit_balance_af: 5000            # SYNTHETIC long-term storage credits
+    recharge_af_per_year: 1000         # SYNTHETIC

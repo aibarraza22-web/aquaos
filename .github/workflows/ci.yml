@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches: [main, "claude/**"]
+  pull_request:
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      AQUAOS_OFFLINE: "1"  # tests use committed fixtures only
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+      - name: Lint
+        run: ruff check aquaos tests
+      - name: Type check
+        run: mypy aquaos
+      - name: Tests (>= 80% coverage on aquaos/core)
+        run: pytest --cov=aquaos/core --cov-report=term-missing --cov-fail-under=80

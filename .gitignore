@@ -13,3 +13,4 @@ dist/
 runs/
 *.duckdb
 *.duckdb.wal
+*.egg-info/
